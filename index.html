@@ -7,7 +7,29 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1>The Page</h1>
+        <h1>Bear Simulator</h1>
+        <p>You are a hungry bear.</p>
+        <section id="BearStats">
+            <h2>Your Bear Stats</h2>
+            <ul>
+                <li class="stat">Weight: <span id="BearStatWeight">200</span></li>
+                <li class="stat">Hunger: <span id="BearStatHunter">300</span></li>
+            </ul>
+        </section>
+        <section id="Campground">
+            <h2>Campground</h2>
+            <p>Select a tent to look inside.</p>
+            <select name="tents" id="Tents"></select>
+            <div id="SelectedTent">
+                <h3>Tent: <span id="TentName">Tent Name</span></h3>
+                <p>Campers:</p>
+                <ul>
+                    <li class="stat">Name</li>
+                    <li class="stat">Name</li>
+                </ul>
+                <button id="EatCampersButton">Eat Campers</button>
+            </div>
+        </section>
         <script src="app.js"></script>
     </body>
 </html>
