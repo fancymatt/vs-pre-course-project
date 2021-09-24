@@ -59,3 +59,7 @@ button:active {
     top: 2px;
     box-shadow: none;
 }
+
+.hidden {
+    display: none;
+}
