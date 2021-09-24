@@ -1,0 +1,61 @@
+body {
+    background-color: beige;
+}
+
+header {
+    text-align: center;
+}
+
+section {
+    margin: 1em;
+    padding: 0.5em 1.5em;
+    border: 1px solid darkkhaki;
+    background-color: white;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+p {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+ul {
+    padding-left: 0; 
+}
+
+.stat {
+    display: inline-block;
+    margin: 0.25em;
+    padding: 0.25em 1em;
+    border: 1px solid #ddd;
+    border-radius: 1em;
+    list-style-type: none;
+    background-color: #f5f5f5;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+select {
+    border: 1px solid darkkhaki;
+    font-size: 1.25em;
+}
+
+button {
+    border-radius: 0.2em;
+    border: 1px solid darkred;
+    padding: 0.5em 1.5em;
+    background-color: red;
+    font-size: 1.25em;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+button:active {
+    position: relative;
+    left: 2px;
+    top: 2px;
+    box-shadow: none;
+}

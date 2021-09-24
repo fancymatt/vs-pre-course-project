@@ -7,10 +7,12 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1>Bear Simulator</h1>
-        <p>You are a hungry bear.</p>
+        <header>
+            <h1>Bear Simulator</h1>
+            <p>You are a hungry bear.</p>
+        </header>
         <section id="BearStats">
-            <h2>Your Bear Stats</h2>
+            <h2>Your Stats</h2>
             <ul>
                 <li class="stat">Weight: <span id="BearStatWeight">200</span></li>
                 <li class="stat">Hunger: <span id="BearStatHunter">300</span></li>
@@ -18,8 +20,11 @@
         </section>
         <section id="Campground">
             <h2>Campground</h2>
-            <p>Select a tent to look inside.</p>
-            <select name="tents" id="Tents"></select>
+            <p>You have arrived at a campground at night. Select a tent to look inside.</p>
+            <select name="tents" id="Tents">
+                <option value="none">Select a Tent...</option>
+                <option value="tent1">Green Tent</option>
+            </select>
             <div id="SelectedTent">
                 <h3>Tent: <span id="TentName">Tent Name</span></h3>
                 <p>Campers:</p>
