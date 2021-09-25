@@ -27,8 +27,20 @@ let tents = [
             { name: "Hermione", weight: 110 },
             { name: "Dobby", weight: 25 }
         ]
-    }
+    },
+    {
+        name: "Camo Tent",
+        campers: [
+            { name: "Bob", weight: 260 },
+            { name: "Brent", weight: 320 },
+            { name: "Bucko", weight: 370 }
+        ]
+    },
 ]
+
+let bearStatsElement = document.getElementById("BearStats");
+let campgroundElement = document.getElementById("Campground");
+let deathElement = document.getElementById("Death");
 
 let bearWeightElement = document.getElementById("BearStatWeight");
 let bearHungerElement = document.getElementById("BearStatHunger");
@@ -38,10 +50,23 @@ let selectedTentTitleElement = document.getElementById("TentName");
 let selectedTentCamperListElement = document.getElementById("CamperList");
 let eatCampersButton = document.getElementById("EatCampersButton");
 
+var bearHasExploded = false;
+
 function updateBearStats() {
     var bearHungerPercent = 1 - (bear.weight - bear.minWeight) / bear.maxWeight;
-    bearWeightElement.innerHTML = bear.weight.toString() + " lbs";
-    bearHungerElement.innerHTML = (bearHungerPercent * 100).toFixed(2) + "%";
+
+    if (bearHungerPercent < 0) {
+        bearHasExploded = true;
+    }
+
+    if (bearHasExploded) {
+        bearStatsElement.classList.add("hidden");
+        campgroundElement.classList.add("hidden");
+        deathElement.classList.remove("hidden");
+    } else {
+        bearWeightElement.innerHTML = bear.weight.toString() + " lbs";
+        bearHungerElement.innerHTML = (bearHungerPercent * 100).toFixed(2) + "%";
+    }
 }
 
 function populateTentDropdown() {
@@ -76,9 +101,9 @@ function lookInsideSelectedTent() {
         for(var i = 0; i < selectedTent.campers.length; i++) {
             var newCamperElement = document.createElement("li");
             newCamperElement.classList.add("stat");
-            let camperString = tents[i]
+            let camperString = selectedTent.campers[i].name + " (" + selectedTent.campers[i].weight + "lb)";
 
-            newCamperElement.innerText = selectedTent.campers[i].name;
+            newCamperElement.innerText = camperString;
             selectedTentCamperListElement.appendChild(newCamperElement);
         }
         eatCampersButton.disabled = false;
