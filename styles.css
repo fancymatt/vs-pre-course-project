@@ -60,6 +60,16 @@ button:active {
     box-shadow: none;
 }
 
+button:disabled {
+    background-color: #ddd;
+    border: 1px solid #bbb;
+    color: #bbb;
+    position: relative;
+    left: 2px;
+    top: 2px;
+    box-shadow: none;
+}
+
 .hidden {
     display: none;
 }
