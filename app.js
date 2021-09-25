@@ -104,15 +104,15 @@ function initializeData() {
     bearHasExploded = false;
 
     let tent1 = {
-        name: "Green Tent",
+        name: "Grey Tent",
         campers: [
-            { name: "Joe", weight: 50 },
-            { name: "Barry", weight: 200 }
+            { name: "Joe", weight: 175 },
+            { name: "Barry", weight: 190 }
         ]
     };
 
     let tent2 = {
-        name: "Red Tent",
+        name: "Purple Tent",
         campers: [
             { name: "Karen", weight: 120 },
             { name: "Becky", weight: 125 }
@@ -120,7 +120,7 @@ function initializeData() {
     };
 
     let tent3 = {
-        name: "Ratty Wizard Tent",
+        name: "Ratty Tent",
         campers: [
             { name: "Ron", weight: 130 },
             { name: "Harry", weight: 125 },
@@ -139,9 +139,10 @@ function initializeData() {
     };
 
     let tent5 = {
-        name: "Fat Tent",
+        name: "Stylish Tent",
         campers: [
-            { name: "Fatso", weight: 9999 }
+            { name: "Bjorn", weight: 160 },
+            { name: "Lola", weight: 140 }
         ]
     }
 
