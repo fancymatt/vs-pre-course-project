@@ -1,5 +1,6 @@
 let bear = {};
 let tents = [];
+var bearHasExploded = false;
 
 let bearStatsElement = document.getElementById("BearStats");
 let campgroundElement = document.getElementById("Campground");
@@ -14,9 +15,15 @@ let selectedTentCamperListElement = document.getElementById("CamperList");
 let eatCampersButton = document.getElementById("EatCampersButton");
 let restartButton = document.getElementById("RestartButton");
 
-var bearHasExploded = false;
 
-function updateBearStats() {
+function eatCampersForTent(tent) {
+    for (var i = 0; i < tent.campers.length; i++) {
+        bear.weight += tent.campers[i].weight;
+    }
+    tent.campers = null;
+}
+
+function updateBearStatsUI() {
     var bearHungerPercent = 1 - (bear.weight - bear.minWeight) / bear.maxWeight;
 
     if (bearHungerPercent < 0) {
@@ -29,69 +36,53 @@ function updateBearStats() {
         deathElement.classList.remove("hidden");
     } else {
         bearWeightElement.innerHTML = bear.weight.toString() + " lbs";
-        bearHungerElement.innerHTML = (bearHungerPercent * 100).toFixed(2) + "%";
+        bearHungerElement.innerHTML = (bearHungerPercent * 100).toFixed(1) + "%";
     }
 }
 
-function populateTentDropdown() {
+function updateTentUIForTent(tent) {
+    selectedTentCamperListElement.innerHTML = '';
+    selectedTentElement.classList.remove("hidden");
+    selectedTentTitleElement.innerText = tent.name;
+    
+    if (tent.campers == null) {
+        updateEmptyCampersUI();
+    } else {
+        updateCampersUIForTent(tent);
+    }
+}
+
+function updateEmptyCampersUI() {
+    var emptyCamperElement = document.createElement("li");
+    emptyCamperElement.classList.add("stat");
+    emptyCamperElement.innerText = "No one";
+    selectedTentCamperListElement.appendChild(emptyCamperElement);
+    eatCampersButton.disabled = true;
+}
+
+function updateCampersUIForTent(tent) {
+    for(var i = 0; i < tent.campers.length; i++) {
+        var newCamperElement = document.createElement("li");
+        newCamperElement.classList.add("stat");
+        let camperString = tent.campers[i].name + " (" + tent.campers[i].weight + "lb)";
+
+        newCamperElement.innerText = camperString;
+        selectedTentCamperListElement.appendChild(newCamperElement);
+    }
+    eatCampersButton.disabled = false;
+}
+
+function updateUnselectedTentUI() {
+    selectedTentElement.classList.add("hidden");
+}
+
+function initializeTentDropdownUI() {
     for (var i = 0; i < tents.length; i++) {
         var newTentOption = document.createElement("option");
         newTentOption.value = i;
         newTentOption.innerText = tents[i].name;
         tentDropdownElement.appendChild(newTentOption);
     }
-}
-
-function lookInsideSelectedTent() {
-    let selectedTent = tents[tentDropdownElement.value];
-
-    if (tentDropdownElement.value === "none") {
-        selectedTentElement.classList.add("hidden");
-        return;
-    }
-
-    selectedTentCamperListElement.innerHTML = '';
-    
-    selectedTentElement.classList.remove("hidden");
-    selectedTentTitleElement.innerText = selectedTent.name;
-    
-    if (selectedTent.campers == null) {
-        var emptyCamperElement = document.createElement("li");
-        emptyCamperElement.classList.add("stat");
-        emptyCamperElement.innerText = "No one";
-        selectedTentCamperListElement.appendChild(emptyCamperElement);
-        eatCampersButton.disabled = true;
-    } else {
-        for(var i = 0; i < selectedTent.campers.length; i++) {
-            var newCamperElement = document.createElement("li");
-            newCamperElement.classList.add("stat");
-            let camperString = selectedTent.campers[i].name + " (" + selectedTent.campers[i].weight + "lb)";
-
-            newCamperElement.innerText = camperString;
-            selectedTentCamperListElement.appendChild(newCamperElement);
-        }
-        eatCampersButton.disabled = false;
-    }
-}
-
-function eatCampers() {
-    let campersToBeEaten = tents[tentDropdownElement.value].campers;
-
-    for (var i = 0; i < campersToBeEaten.length; i++) {
-        bear.weight += campersToBeEaten[i].weight;
-    }
-
-    tents[tentDropdownElement.value].campers = null;
-
-    updateBearStats();
-    lookInsideSelectedTent();
-}
-
-function restart() {
-    initializeData();
-    initializeUI();
-    updateBearStats();
-    populateTentDropdown();
 }
 
 function initializeData() {
@@ -166,16 +157,36 @@ function initializeUI() {
     tentDropdownElement.appendChild(emptyDropdownOption);
     tentDropdownElement.selected = tentDropdownElement;
 
-    lookInsideSelectedTent();
+    initializeTentDropdownUI();
+    updateUnselectedTentUI();
+    updateBearStatsUI();
+}
+
+function onTentDropdownChanged() {
+    if (tentDropdownElement.value === "none") {
+        updateUnselectedTentUI()
+        return;
+    }
+    updateTentUIForTent(tents[tentDropdownElement.value]);
+}
+
+function onEatCampersButtonClicked() {
+    let tentToEat = tents[tentDropdownElement.value];
+    eatCampersForTent(tentToEat);
+    updateBearStatsUI();
+    updateTentUIForTent(tentToEat);
+}
+
+function onRestartButtonClicked() {
+    initialize();
 }
 
 function initialize() {
     initializeData();
-    updateBearStats();
-    populateTentDropdown();
-    tentDropdownElement.addEventListener("change", lookInsideSelectedTent);
-    eatCampersButton.addEventListener("click", eatCampers);
-    restartButton.addEventListener("click", restart);
+    initializeUI();
 }
 
 initialize();
+tentDropdownElement.addEventListener("change", onTentDropdownChanged);
+eatCampersButton.addEventListener("click", onEatCampersButtonClicked);
+restartButton.addEventListener("click", onRestartButtonClicked);
