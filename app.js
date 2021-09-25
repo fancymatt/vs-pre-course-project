@@ -1,42 +1,5 @@
-let bear = {
-    weight: 400,
-    minWeight: 300,
-    maxWeight: 1500
-}
-
-let tents = [
-    {
-        name: "Green Tent",
-        campers: [
-            { name: "Joe", weight: 50 },
-            { name: "Barry", weight: 200 }
-        ]
-    },
-    {
-        name: "Red Tent",
-        campers: [
-            { name: "Karen", weight: 120 },
-            { name: "Becky", weight: 125 }
-        ]
-    },
-    {
-        name: "Ratty Wizard Tent",
-        campers: [
-            { name: "Ron", weight: 130 },
-            { name: "Harry", weight: 125 },
-            { name: "Hermione", weight: 110 },
-            { name: "Dobby", weight: 25 }
-        ]
-    },
-    {
-        name: "Camo Tent",
-        campers: [
-            { name: "Bob", weight: 260 },
-            { name: "Brent", weight: 320 },
-            { name: "Bucko", weight: 370 }
-        ]
-    },
-]
+let bear = {};
+let tents = [];
 
 let bearStatsElement = document.getElementById("BearStats");
 let campgroundElement = document.getElementById("Campground");
@@ -49,6 +12,7 @@ let selectedTentElement = document.getElementById("SelectedTent");
 let selectedTentTitleElement = document.getElementById("TentName");
 let selectedTentCamperListElement = document.getElementById("CamperList");
 let eatCampersButton = document.getElementById("EatCampersButton");
+let restartButton = document.getElementById("RestartButton");
 
 var bearHasExploded = false;
 
@@ -123,11 +87,94 @@ function eatCampers() {
     lookInsideSelectedTent();
 }
 
+function restart() {
+    initializeData();
+    initializeUI();
+    updateBearStats();
+    populateTentDropdown();
+}
+
+function initializeData() {
+    bear = {
+        weight: 400,
+        minWeight: 300,
+        maxWeight: 1500
+    };
+
+    bearHasExploded = false;
+
+    let tent1 = {
+        name: "Green Tent",
+        campers: [
+            { name: "Joe", weight: 50 },
+            { name: "Barry", weight: 200 }
+        ]
+    };
+
+    let tent2 = {
+        name: "Red Tent",
+        campers: [
+            { name: "Karen", weight: 120 },
+            { name: "Becky", weight: 125 }
+        ]
+    };
+
+    let tent3 = {
+        name: "Ratty Wizard Tent",
+        campers: [
+            { name: "Ron", weight: 130 },
+            { name: "Harry", weight: 125 },
+            { name: "Hermione", weight: 110 },
+            { name: "Dobby", weight: 25 }
+        ]
+    };
+
+    let tent4 = {
+        name: "Camo Tent",
+        campers: [
+            { name: "Bob", weight: 260 },
+            { name: "Brent", weight: 320 },
+            { name: "Bucko", weight: 370 }
+        ]
+    };
+
+    let tent5 = {
+        name: "Fat Tent",
+        campers: [
+            { name: "Fatso", weight: 9999 }
+        ]
+    }
+
+    tents = [];
+    tents.push(tent1);
+    tents.push(tent2);
+    tents.push(tent3);
+    tents.push(tent4);
+    tents.push(tent5);
+}
+
+function initializeUI() {
+    deathElement.classList.add("hidden");
+    bearStatsElement.classList.remove("hidden");
+    campgroundElement.classList.remove("hidden");
+    tentDropdownElement.innerHTML = "";
+
+    let emptyDropdownOption = document.createElement("option");
+    emptyDropdownOption.value = "none";
+    emptyDropdownOption.innerText = "Select a Tent...";
+    tentDropdownElement.appendChild(emptyDropdownOption);
+    tentDropdownElement.selected = tentDropdownElement;
+
+    lookInsideSelectedTent();
+}
+
 function initialize() {
+    initializeData();
     updateBearStats();
     populateTentDropdown();
     tentDropdownElement.addEventListener("change", lookInsideSelectedTent);
     eatCampersButton.addEventListener("click", eatCampers);
+    restartButton.addEventListener("click", restart);
 }
 
 initialize();
